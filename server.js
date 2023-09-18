@@ -5,8 +5,21 @@ const { mongo } = require("mongoose");
 
 const app = express();
 const port = 3000;
+var cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
+app.options("*", cors());
+
+
+const UserRouter = require("./routes/user");
+app.use("/users", UserRouter);
+
+
+
+
+
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -15,6 +28,7 @@ app.get("/", (req, res) => {
 app.get("/products", async (req, res) => {
   try {
     const products = await Product.find({});
+    
     res.status(200).json(products);
   } catch (error) {
     console.log(error);
