@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 function validateUser(req) {
   const schema = Joi.object({
@@ -56,7 +57,17 @@ module.exports.Login = async (req, res) => {
     if (checkUser) {
       const match = await bcrypt.compare(password, checkUser.password);
       if (match) {
-        res.status(200).json({ message: "Login Success", checkUser });
+        const token = jwt.sign(
+            {
+              id: checkUser._id,
+              email: checkUser?.email,
+              role: checkUser?.role,
+            },
+            "default_secret_key",
+            { expiresIn: "1d" }
+          );
+
+        res.status(200).json({ message: "Login Success", checkUser,token });
       } else {
         res.status(400).json({ message: "Password Is Wrong" });
       }
