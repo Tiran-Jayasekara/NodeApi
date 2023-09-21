@@ -13,8 +13,14 @@ app.options("*", cors());
 
 
 const UserRouter = require("./routes/user");
-app.use("/users", UserRouter);
+const AddressRouter =  require("./routes/address")
+const ProductRouter =  require("./routes/product")
+const cartRouter =  require("./routes/cart")
 
+app.use("/users", UserRouter);
+app.use("/address", AddressRouter);
+app.use("/products",ProductRouter);
+app.use("/cart",cartRouter);
 
 
 

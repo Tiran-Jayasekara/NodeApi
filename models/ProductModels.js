@@ -7,18 +7,38 @@ const ProductModels = mongoose.Schema(
             type:String,
             required:[true,'please Enter a product Name']
         },
-        quantity:{
-            type:Number,
-            required:true,
-            default:0,
+        description:{
+            type:String,
+            required:true
         },
         price:{
             type:Number,
+            required:true
+        },
+        category:{
+            type:String,
+            required:true
+        },
+        sizes:{
+            type:Array,
+            required:true
+        },
+        deliveryInfo:{
+            type:String,
             required:true,
         },
-        image:{
+        onSale:{
             type:String,
-            required:false
+            required:false,
+        },
+        priceDrop:{
+            type:Number,
+            required:false,
+            default:0,
+        },
+        imageUrl:{
+            type:String,
+            required:true,
         }
             
     },

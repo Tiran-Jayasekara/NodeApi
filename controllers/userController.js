@@ -58,16 +58,16 @@ module.exports.Login = async (req, res) => {
       const match = await bcrypt.compare(password, checkUser.password);
       if (match) {
         const token = jwt.sign(
-            {
-              id: checkUser._id,
-              email: checkUser?.email,
-              role: checkUser?.role,
-            },
-            "default_secret_key",
-            { expiresIn: "1d" }
-          );
+          {
+            id: checkUser._id,
+            email: checkUser?.email,
+            role: checkUser?.role,
+          },
+          "default_secret_key",
+          { expiresIn: "1d" }
+        );
 
-        res.status(200).json({ message: "Login Success", checkUser,token });
+        res.status(200).json({ message: "Login Success", checkUser, token });
       } else {
         res.status(400).json({ message: "Password Is Wrong" });
       }
@@ -91,3 +91,5 @@ module.exports.getAllUsers = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+
