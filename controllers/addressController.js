@@ -5,7 +5,6 @@ app.use(express.json());
 const bcrypt = require("bcrypt");
 const Address = require("../models/addressModels");
 
-
 module.exports.AddAddress = async (req, res) => {
   const schema = Joi.object({
     userID: Joi.string().required(),
@@ -79,29 +78,29 @@ module.exports.updateAddress = async (req, res) => {
   });
 
   try {
-    const { addressid, fullName, address, city, country, postalCode } = req.body;
-    const { error } = schema.validate(
-      {
-        addressid,
-        fullName,
-        address,
-        city,
-        country,
-        postalCode,
-      }
-    );
+    const { addressid, fullName, address, city, country, postalCode } =
+      req.body;
+    const { error } = schema.validate({
+      addressid,
+      fullName,
+      address,
+      city,
+      country,
+      postalCode,
+    });
     if (error) {
       res.status(400).json({ message: error.message });
     } else {
       const update = await Address.findOneAndUpdate(
         { _id: addressid },
         {
-        fullName,
-        address,
-        city,
-        country,
-        postalCode,
-      }, { new: true }
+          fullName,
+          address,
+          city,
+          country,
+          postalCode,
+        },
+        { new: true }
       );
       if (update) {
         res.status(200).json({ message: "Update Success", update });
@@ -114,17 +113,17 @@ module.exports.updateAddress = async (req, res) => {
   }
 };
 
-module.exports.deleteAddress = async(req,res)=>{
-    try {
-        const addressId = req.params.id;
-        const addressDelete = await Address.findByIdAndDelete(addressId);
+module.exports.deleteAddress = async (req, res) => {
+  try {
+    const addressId = req.params.id;
+    const addressDelete = await Address.findByIdAndDelete(addressId);
 
-        if (addressDelete) {
-            res.status(200).json({message:"Delete Success",addressDelete})
-        } else {
-            res.status(400).json({message:"This Id is not exist"})
-        }
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+    if (addressDelete) {
+      res.status(200).json({ message: "Delete Success", addressDelete });
+    } else {
+      res.status(400).json({ message: "This Id is not exist" });
     }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };

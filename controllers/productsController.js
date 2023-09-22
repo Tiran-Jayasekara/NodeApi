@@ -2,8 +2,6 @@ const Joi = require("joi").extend(require("@joi/date"));
 const express = require("express");
 const app = express();
 app.use(express.json());
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const Product = require("../models/ProductModels");
 
 module.exports.addProduct = async (req, res) => {
@@ -187,12 +185,12 @@ module.exports.updateProducts = async (req, res) => {
           priceDrop,
           imageUrl,
         },
-        {new:true}
+        { new: true }
       );
       if (updateProducts) {
-        res.status(200).json({message:"Update Success",updateProducts})
+        res.status(200).json({ message: "Update Success", updateProducts });
       } else {
-        res.status(400).json({message:"Update Unsuccess"});
+        res.status(400).json({ message: "Update Unsuccess" });
       }
     }
   } catch (error) {

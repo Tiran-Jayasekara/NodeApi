@@ -11,21 +11,17 @@ app.use(express.json());
 app.use(cors());
 app.options("*", cors());
 
-
 const UserRouter = require("./routes/user");
-const AddressRouter =  require("./routes/address")
-const ProductRouter =  require("./routes/product")
-const cartRouter =  require("./routes/cart")
+const AddressRouter = require("./routes/address");
+const ProductRouter = require("./routes/product");
+const cartRouter = require("./routes/cart");
+const orderRouter = require("./routes/order");
 
 app.use("/users", UserRouter);
 app.use("/address", AddressRouter);
-app.use("/products",ProductRouter);
-app.use("/cart",cartRouter);
-
-
-
-
-
+app.use("/products", ProductRouter);
+app.use("/cart", cartRouter);
+app.use("/order", orderRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -34,7 +30,7 @@ app.get("/", (req, res) => {
 app.get("/products", async (req, res) => {
   try {
     const products = await Product.find({});
-    
+
     res.status(200).json(products);
   } catch (error) {
     console.log(error);
@@ -75,7 +71,7 @@ app.put("/products/:id", async (req, res) => {
       res.status(404).json({ message: `can not find any Id with ID ${id}` });
     }
   } catch (error) {
-    res.status(400).json({ message: error.message});
+    res.status(400).json({ message: error.message });
   }
 });
 
@@ -86,10 +82,10 @@ app.delete("/products/:id", async (req, res) => {
     if (!product) {
       res.status(400).json({ message: "not Founded Id" });
     } else {
-      res.status(200).json({ message: "Delete success"});
+      res.status(200).json({ message: "Delete success" });
     }
   } catch (error) {
-    res.status(400).json({message: error.message});
+    res.status(400).json({ message: error.message });
   }
 });
 

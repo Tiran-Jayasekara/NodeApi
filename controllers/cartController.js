@@ -62,15 +62,15 @@ module.exports.getAllCartItems = async (req, res) => {
 };
 
 module.exports.deleteCartItem = async (req, res) => {
-    try {
-        const itemId = req.params.id;
-        const deleteItem = await Cart.findByIdAndDelete(itemId);
-        if (deleteItem) {
-            res.status(200).json({message:"Delete Success",deleteItem})
-        } else {
-            res.status(400).json({message:"Delete UnSuccess"})
-        }
-    } catch (error) {
-        res.status(400).json({message:error.message})
+  try {
+    const itemId = req.params.id;
+    const deleteItem = await Cart.findByIdAndDelete(itemId);
+    if (deleteItem) {
+      res.status(200).json({ message: "Delete Success", deleteItem });
+    } else {
+      res.status(400).json({ message: "Delete UnSuccess" });
     }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
